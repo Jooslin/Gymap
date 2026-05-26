@@ -49,7 +49,7 @@ extension LabelConfiguration {
     static let title20Bold = make(size: 20, weight: .bold)
     static let title20Semibold = make(size: 20, weight: .semibold)
     static let title18 = make(size: 18, weight: .semibold)
-    static let title16 = make(size: 26, weight: .semibold)
+    static let title16 = make(size: 16, weight: .semibold)
     
     //MARK: Body
     static let body15 = make(size: 15, weight: .semibold)
