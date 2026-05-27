@@ -71,6 +71,7 @@ extension MainFlow {
             
             self.tabBarController.setViewControllers([home, map, calendar, my], animated: true)
             self.tabBarController.tabBar.tintColor = .gray800
+            self.tabBarController.tabBar.unselectedItemTintColor = .gray400 // iOS26에서는 적용 안되는 것으로 확인
         }
         
         return .multiple(flowContributors: [
