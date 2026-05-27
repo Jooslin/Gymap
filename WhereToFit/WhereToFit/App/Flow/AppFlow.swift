@@ -29,6 +29,7 @@ final class AppFlow: Flow {
             //TODO: 추후 수정 필요
         case .splash:
             let vc = TempViewController(reactor: TempReactor())
+            window.rootViewController = vc
             return .one(
                 flowContributor: .contribute(
                     withNextPresentable: vc,
