@@ -21,24 +21,14 @@ final class HomeFlow: Flow {
         }
         
         switch step {
-            //TODO: 추후 수정 필요
-        case .splash:
+            //TODO: 추후 VC 수정 필요
+        case .homeTab:
             let vc = TempViewController(reactor: TempReactor())
-
-            return .one(
-                flowContributor: .contribute(
-                    withNextPresentable: vc,
-                    withNextStepper: vc
-                ))
-
-        case .main:
-            return .none
-
-        case let .updateRequired(message, storeURL):
-            return .none
+            navigationController.pushViewController(vc, animated: true)
+            return .one(flowContributor: .contribute(withNextPresentable: vc, withNextStepper: vc))
             
         default:
-            return .none
+            return .one(flowContributor: .forwardToParentFlow(withStep: step))
         }
     }
 }
