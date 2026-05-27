@@ -58,40 +58,26 @@ final class MainFlow: Flow {
 extension MainFlow {
     private func navigateToMain() -> FlowContributors {
         
-        let plantTabFlow = PlantTabFlow()
-        let calendarTabFlow = CalendarTabFlow()
-        let myInfoTabFlow = MyInfoTabFlow()
+        let homeFlow = HomeFlow()
+        let mapFlow = MapFlow()
+        let calendarFlow = CalendarFlow()
+        let myFlow = MyFlow()
         
-        // Flow를 준비 - 클로저는 Flow가 배치될 준비가 되었을 때(Flow의 첫 번째 화면이 선택되었을 때) 실행될 동작
-        // Flow.use는 내부에서 Single 이벤트를 drive로 구독을 소비하므로 소비 완료 후 자동으로 구독이 해제되어 메모리 누수가 발생하지 않음
-        Flows.use(plantTabFlow, calendarTabFlow, myInfoTabFlow, when: .created) { plant, calendar, my in
+        Flows.use(homeFlow, mapFlow, calendarFlow, myFlow, when: .created) { home, map, calendar, my in
+            home.tabBarItem = UITabBarItem(title: "홈", image: .home, selectedImage: .homeFilled)
+            map.tabBarItem = UITabBarItem(title: "지도", image: .locationPin, selectedImage: .locationPinFilled)
+            calendar.tabBarItem = UITabBarItem(title: "캘린더", image: .date, selectedImage: .dateFilled)
+            my.tabBarItem = UITabBarItem(title: "마이", image: .home, selectedImage: .homeFilled)
             
-            plant.tabBarItem = UITabBarItem(
-                title: "홈",
-                image: .houseEmpty,
-                selectedImage: .houseFill
-            )
-            
-            calendar.tabBarItem = UITabBarItem(
-                title: "캘린더",
-                image: .calendarEmpty,
-                selectedImage: .calendarFill,
-            )
-            
-            my.tabBarItem = UITabBarItem(
-                title: "마이",
-                image: .userEmpty,
-                selectedImage: .userFill
-            )
-            
-            self.tabBarController.setViewControllers([plant, calendar, my], animated: true)
-            self.tabBarController.tabBar.tintColor = .primary700
+            self.tabBarController.setViewControllers([home, map, calendar, my], animated: true)
+            self.tabBarController.tabBar.tintColor = .gray800
         }
         
         return .multiple(flowContributors: [
-            .contribute(withNextPresentable: plantTabFlow, withNextStepper: OneStepper(withSingleStep: AppStep.plantTab)),
-            .contribute(withNextPresentable: calendarTabFlow, withNextStepper: OneStepper(withSingleStep: AppStep.calendarTab)),
-            .contribute(withNextPresentable: myInfoTabFlow, withNextStepper: OneStepper(withSingleStep: AppStep.myInfoTab))
+            .contribute(withNextPresentable: homeFlow, withNextStepper: OneStepper(withSingleStep: AppStep.homeTab)),
+            .contribute(withNextPresentable: mapFlow, withNextStepper: OneStepper(withSingleStep: AppStep.mapTab)),
+            .contribute(withNextPresentable: calendarFlow, withNextStepper: OneStepper(withSingleStep: AppStep.calendarTab)),
+            .contribute(withNextPresentable: myFlow, withNextStepper: OneStepper(withSingleStep: AppStep.myTab))
         ])
     }
     
