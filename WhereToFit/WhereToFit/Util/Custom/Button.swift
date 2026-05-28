@@ -18,14 +18,26 @@ class Button: UIControl {
         set { titleLabel.text = newValue}
     }
     
+    override var intrinsicContentSize: CGSize {
+        let textSize = titleLabel.intrinsicContentSize
+        return CGSize(
+            width: textSize.width + padding.left + padding.right,
+            height: textSize.height + padding.top + padding.bottom
+        )
+    }
     
+    override var isHighlighted: Bool {
+        didSet {
+            alpha = isHighlighted ? 0.5 : 1
+        }
+    }
     
     init(config: ButtonConfiguration) {
         background = switch config.style {
         case .fill:
             ButtonBackgroundView(color: config.color, radius: config.size.radius)
         case .border:
-            ButtonBackgroundView(color: config.color, radius: config.size.radius, borderWidth: config.style.borderWidth)
+            ButtonBackgroundView(color: .white, radius: config.size.radius, borderWidth: config.style.borderWidth)
         }
         
         titleLabel = UILabel(config: config.size.labelConfig)
@@ -39,6 +51,12 @@ class Button: UIControl {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        background.frame = bounds
+        titleLabel.frame = bounds
     }
 }
 

@@ -82,8 +82,4 @@ extension ButtonConfiguration {
     static let smallBorderBlue = make(size: .small, style: .border, color: .systemBlue)
     static let mediumBorderBlue = make(size: .medium, style: .border, color: .systemBlue)
     static let largeBorderBlue = make(size: .large, style: .border, color: .systemBlue)
-    
-    static let smallBorderGray = make(size: .small, style: .border, color: .gray200)
-    static let mediumBorderGray = make(size: .medium, style: .border, color: .gray200)
-    static let largeBorderGray = make(size: .large, style: .border, color: .gray200)
 }
