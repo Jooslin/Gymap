@@ -58,7 +58,7 @@ class Button: UIControl {
     override func layoutSubviews() {
         super.layoutSubviews()
         background.frame = bounds
-        titleLabel.frame = bounds
+        titleLabel.frame = bounds.inset(by: padding)
     }
 }
 
@@ -86,6 +86,7 @@ extension Button {
         override func willMove(toSuperview newSuperview: UIView?) {
             super.willMove(toSuperview: newSuperview)
             isUserInteractionEnabled = false
+            
             backgroundColor = color
             layer.cornerRadius = radius
             

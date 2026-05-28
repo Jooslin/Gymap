@@ -27,7 +27,7 @@ final class TempViewController: BaseViewController<TempReactor> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let smallButtons = UIStackView(arrangedSubviews: [smallGrayButton, smallLightGrayButton]).then {
             $0.axis = .horizontal
             $0.spacing = 8
@@ -37,7 +37,7 @@ final class TempViewController: BaseViewController<TempReactor> {
             $0.axis = .vertical
             $0.spacing = 5
         }
-        
+
         view.addSubview(titleView)
         view.addSubview(buttons)
         
@@ -50,8 +50,6 @@ final class TempViewController: BaseViewController<TempReactor> {
             $0.top.equalTo(titleView.snp.bottom).offset(16)
             $0.centerX.equalToSuperview()
         }
-        
-        
     }
     
     override func bind(reactor: TempReactor) {
@@ -60,6 +58,7 @@ final class TempViewController: BaseViewController<TempReactor> {
                 print("leftButtonTapped")
             })
             .disposed(by: disposeBag)
+        
     }
 }
 
