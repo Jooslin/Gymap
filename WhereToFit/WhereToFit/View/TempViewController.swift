@@ -30,11 +30,13 @@ final class TempViewController: BaseViewController<TempReactor> {
         let smallButtons = UIStackView(arrangedSubviews: [smallGrayButton, smallLightGrayButton]).then {
             $0.axis = .horizontal
             $0.spacing = 8
+            $0.alignment = .center
         }
         
         let buttons = UIStackView(arrangedSubviews: [largeBorderButton, mediumBlueButton, smallButtons]).then {
             $0.axis = .vertical
             $0.spacing = 5
+            $0.alignment = .center
         }
 
         view.addSubview(titleView)
