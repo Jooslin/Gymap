@@ -40,7 +40,7 @@ class Button: UIControl {
             ButtonBackgroundView(color: .white, radius: config.size.radius, borderWidth: config.style.borderWidth)
         }
         
-        titleLabel = UILabel(config: config.size.labelConfig)
+        titleLabel = UILabel(config: config.size.labelConfig, color: config.textColor)
         padding = config.size.padding
         super.init(frame: .zero)
         
