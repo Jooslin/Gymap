@@ -43,9 +43,21 @@ class TitleView: UIView {
     fileprivate let leftButton = UIButton(configuration: .plain())
     fileprivate let rightButton = UIButton(configuration: .plain())
     
-    init(text: String?, leftButtonImage: UIImage? = nil, rightButtonImage: UIImage? = nil) {
+    init(text: String? = nil, leftButtonImage: UIImage? = nil, rightButtonImage: UIImage? = nil) {
         super.init(frame: .zero)
         
+        configure(text: text, leftButtonImage: leftButtonImage, rightButtonImage: rightButtonImage)
+        setLayout()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension TitleView {
+    private func configure(text: String? = nil, leftButtonImage: UIImage? = nil, rightButtonImage: UIImage? = nil) {
         if let text {
             titleLabel.text = text
         } else {
@@ -63,17 +75,8 @@ class TitleView: UIView {
         } else {
             rightButton.isHidden = true
         }
-        
-        setLayout()
     }
     
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension TitleView {
     private func setLayout() {
         addSubview(titleLabel)
         addSubview(leftButton)
