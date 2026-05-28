@@ -16,7 +16,12 @@ struct ButtonConfiguration {
         case fill
         case border
         
-        var borderWidth: CGFloat { return 1 }
+        var borderWidth: CGFloat {
+            switch self {
+            case .fill: return 0
+            case .border: return 1
+            }
+        }
     }
     
     enum ButtonSize {
