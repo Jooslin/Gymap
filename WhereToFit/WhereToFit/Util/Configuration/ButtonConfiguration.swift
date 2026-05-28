@@ -39,11 +39,11 @@ struct ButtonConfiguration {
             }
         }
         
-        var radius: CGFloat {
+        var size: CGSize {
             switch self {
-            case .small: return 99
-            case .medium: return 99
-            case .large: return 99
+            case .small: return CGSize(width: 80, height: 38)
+            case .medium: return CGSize(width: 222, height: 48)
+            case .large: return CGSize(width: 343, height: 48)
             }
         }
         

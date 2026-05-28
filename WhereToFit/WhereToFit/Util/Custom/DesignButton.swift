@@ -35,7 +35,7 @@ import RxCocoa
 class DesignButton: UIControl {
     private let background: UIView
     private let titleLabel: UILabel
-    private let padding: UIEdgeInsets
+    private let config: ButtonConfiguration
     
     var title: String?  {
         get { titleLabel.text }
@@ -43,11 +43,7 @@ class DesignButton: UIControl {
     }
     
     override var intrinsicContentSize: CGSize {
-        let textSize = titleLabel.intrinsicContentSize
-        return CGSize(
-            width: textSize.width + padding.left + padding.right,
-            height: textSize.height + padding.top + padding.bottom
-        )
+        return config.size.size
     }
     
     override var isHighlighted: Bool {
@@ -57,6 +53,8 @@ class DesignButton: UIControl {
     }
     
     init(config: ButtonConfiguration) {
+        self.config = config
+        
         background = switch config.style {
         case .fill:
             ButtonBackgroundView(config: config)
@@ -67,7 +65,7 @@ class DesignButton: UIControl {
         titleLabel = UILabel(config: config.size.labelConfig, color: config.titleColor).then {
             $0.textAlignment = .center
         }
-        padding = config.size.padding
+        
         super.init(frame: .zero)
         
         addSubview(background)
@@ -82,23 +80,22 @@ class DesignButton: UIControl {
     override func layoutSubviews() {
         super.layoutSubviews()
         background.frame = bounds
-        titleLabel.frame = bounds.inset(by: padding)
+        titleLabel.frame = bounds.inset(by: config.size.padding)
     }
 }
 
 extension DesignButton {
     private class ButtonBackgroundView: UIView {
-        let color: UIColor
-        let radius: CGFloat
-        let borderWidth: CGFloat
-        let borderColor: UIColor
-        
         init(config: ButtonConfiguration) {
-            self.color = config.color
-            self.radius = config.size.radius
-            self.borderWidth = config.style.borderWidth
-            self.borderColor = config.titleColor
             super.init(frame: .zero)
+            
+            self.backgroundColor = config.color
+            self.layer.cornerRadius = config.size.size.height / 2
+            
+            if config.style.borderWidth > 0 {
+                layer.borderWidth = config.style.borderWidth
+                layer.borderColor = config.titleColor.cgColor
+            }
         }
         
         @available(*, unavailable)
@@ -110,14 +107,6 @@ extension DesignButton {
         override func willMove(toSuperview newSuperview: UIView?) {
             super.willMove(toSuperview: newSuperview)
             isUserInteractionEnabled = false
-            
-            backgroundColor = color
-            layer.cornerRadius = radius
-            
-            if borderWidth > 0 {
-                layer.borderWidth = borderWidth
-                layer.borderColor = borderColor.cgColor
-            }
         }
     }
 }
