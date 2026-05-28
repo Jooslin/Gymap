@@ -70,7 +70,7 @@ extension Button {
             self.color = color
             self.radius = radius
             self.borderWidth = borderWidth
-            super.init()
+            super.init(frame: .zero)
         }
         
         @available(*, unavailable)

@@ -7,22 +7,51 @@
 
 import UIKit
 import ReactorKit
+import SnapKit
+import Then
 
 final class TempViewController: BaseViewController<TempReactor> {
     let titleView = TitleView(text: "위치 지정", leftButtonImage: .close)
+    let largeBorderButton = Button(config: .largeBorderBlue).then {
+        $0.title = "large border blue"
+    }
+    let mediumBlueButton = Button(config: .mediumFilledBlue).then {
+        $0.title = "medium blue"
+    }
+    let smallGrayButton = Button(config: .smallFilledGray).then {
+        $0.title = "gray"
+    }
+    let smallLightGrayButton = Button(config: .smallFilledLightGray).then {
+        $0.title = "light gray"
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let smallButtons = UIStackView(arrangedSubviews: [smallGrayButton, smallLightGrayButton]).then {
+            $0.axis = .horizontal
+            $0.spacing = 8
+        }
+        
+        let buttons = UIStackView(arrangedSubviews: [largeBorderButton, mediumBlueButton, smallButtons]).then {
+            $0.axis = .vertical
+            $0.spacing = 5
+        }
+        
         view.addSubview(titleView)
+        view.addSubview(buttons)
         
-        titleView.translatesAutoresizingMaskIntoConstraints = false
+        titleView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.horizontalEdges.equalToSuperview()
+        }
         
-        NSLayoutConstraint.activate([
-            titleView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            titleView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            titleView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-        ])
+        buttons.snp.makeConstraints {
+            $0.top.equalTo(titleView.snp.bottom).offset(16)
+            $0.centerX.equalToSuperview()
+        }
+        
+        
     }
     
     override func bind(reactor: TempReactor) {
