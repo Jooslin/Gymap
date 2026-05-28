@@ -15,9 +15,8 @@ final class TempViewController: BaseViewController<TempReactor> {
     let largeBorderButton = DesignButton(config: .largeBorderBlue).then {
         $0.title = "large border blue"
     }
-    let mediumBlueButton = DesignButton(config: .mediumFilledBlue).then {
-        $0.title = "medium blue"
-    }
+    let mediumBlueButton = DesignButton(config: .mediumFilledBlue)
+    
     let smallGrayButton = DesignButton(config: .smallFilledGray).then {
         $0.title = "gray"
     }
