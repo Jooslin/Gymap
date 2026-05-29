@@ -71,7 +71,6 @@ extension ButtonConfiguration {
         )
     }
     
-    //TODO: 색상 수정 필요
     //MARK: Filled
     static let smallFilledBlue = make(size: .small, style: .fill, color: .primary400, titleColor: .white)
     static let mediumFilledBlue = make(size: .medium, style: .fill, color: .primary400, titleColor: .white)
