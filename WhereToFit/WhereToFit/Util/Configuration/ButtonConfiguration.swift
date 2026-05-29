@@ -73,9 +73,9 @@ extension ButtonConfiguration {
     
     //TODO: 색상 수정 필요
     //MARK: Filled
-    static let smallFilledBlue = make(size: .small, style: .fill, color: .systemBlue, titleColor: .white)
-    static let mediumFilledBlue = make(size: .medium, style: .fill, color: .systemBlue, titleColor: .white)
-    static let largeFilledBlue = make(size: .large, style: .fill, color: .systemBlue, titleColor: .white)
+    static let smallFilledBlue = make(size: .small, style: .fill, color: .primary400, titleColor: .white)
+    static let mediumFilledBlue = make(size: .medium, style: .fill, color: .primary400, titleColor: .white)
+    static let largeFilledBlue = make(size: .large, style: .fill, color: .primary400, titleColor: .white)
     
     static let smallFilledGray = make(size: .small, style: .fill, color: .gray200, titleColor: .white)
     static let mediumFilledGray = make(size: .medium, style: .fill, color: .gray200, titleColor: .white)
@@ -86,7 +86,7 @@ extension ButtonConfiguration {
     static let largeFilledLightGray = make(size: .large, style: .fill, color: .gray50, titleColor: .gray500)
     
     //MARK: Border
-    static let smallBorderBlue = make(size: .small, style: .border, color: .white, titleColor: .systemBlue)
-    static let mediumBorderBlue = make(size: .medium, style: .border, color: .white, titleColor: .systemBlue)
-    static let largeBorderBlue = make(size: .large, style: .border, color: .white, titleColor: .systemBlue)
+    static let smallBorderBlue = make(size: .small, style: .border, color: .white, titleColor: .primary400)
+    static let mediumBorderBlue = make(size: .medium, style: .border, color: .white, titleColor: .primary400)
+    static let largeBorderBlue = make(size: .large, style: .border, color: .white, titleColor: .primary400)
 }
