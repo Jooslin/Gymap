@@ -29,6 +29,18 @@ extension HomeCollectionView {
     
     nonisolated
     enum Item: Hashable {
-        case weather
+        case weather(WeatherSectionItem)
+    }
+}
+
+extension HomeCollectionView {
+    struct WeatherSectionItem: Hashable {
+        let weekday: [String] // 요일 - 오늘은 '오늘'로 입력받아야함
+//        let schedule: [] - 운동 종류 모델 사용
+//        let weather: Weather
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(weekday)
+        }
     }
 }
