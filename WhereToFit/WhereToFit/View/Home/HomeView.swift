@@ -77,15 +77,10 @@ extension HomeView {
             }
         }
         
-        dataSource.supplementaryViewProvider = { [weak self] _, kind, indexPath in
-            guard let section = self?.dataSource.sectionIdentifier(for: indexPath.section) else {
-                return UICollectionReusableView()
-            }
-            
-            switch kind {
+        dataSource.supplementaryViewProvider = {
+            switch $1 {
             case "headerKind":
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerViewRegistration, for: indexPath)
-                
+                return collectionView.dequeueConfiguredReusableSupplementary(using: headerViewRegistration, for: $2)
             default:
                 return UICollectionReusableView()
             }
