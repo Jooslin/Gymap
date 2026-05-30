@@ -38,6 +38,13 @@ final class HomeWeatherCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         disposeBag = DisposeBag()
+        
+        // 이미지 초기화
+        weeklyDateView.arrangedSubviews.forEach {
+            if let dayView = $0 as? OneDayView {
+                dayView.dateImageView.image = nil
+            }
+        }
     }
 }
 
