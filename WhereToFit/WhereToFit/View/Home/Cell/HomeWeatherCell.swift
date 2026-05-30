@@ -28,6 +28,7 @@ final class HomeWeatherCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
+        setLayout()
     }
     
     @available(*, unavailable)
@@ -49,6 +50,54 @@ final class HomeWeatherCell: UICollectionViewCell {
 }
 
 extension HomeWeatherCell {
+    private func setLayout() {
+        let weatherLabelStackView = UIStackView(arrangedSubviews: [weatherImageView, weatherLabel]).then {
+            $0.axis = .horizontal
+            $0.spacing = 2
+            $0.alignment = .center
+        }
+        
+        let weatherStackView = UIStackView(arrangedSubviews: [weatherLabelStackView, weatherDescriptionLabel]).then {
+            $0.axis = .vertical
+            $0.spacing = 8
+            $0.alignment = .center
+        }
+        
+        let buttonStackView = UIStackView(arrangedSubviews: [registrationButton, recordButton]).then {
+            $0.axis = .horizontal
+            $0.spacing = 16
+            $0.alignment = .center
+        }
+        
+        contentView.addSubview(weeklyDateView)
+        contentView.addSubview(weatherStackView)
+        contentView.addSubview(reservationLabel)
+        contentView.addSubview(buttonStackView)
+        
+        weeklyDateView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview().inset(4)
+        }
+        
+        weatherStackView.snp.makeConstraints {
+            $0.top.equalTo(weeklyDateView.snp.bottom).offset(36)
+            $0.centerX.equalToSuperview()
+        }
+        
+        reservationLabel.snp.makeConstraints {
+            $0.top.equalTo(weatherStackView.snp.bottom).offset(36)
+            $0.centerX.equalToSuperview()
+        }
+        
+        buttonStackView.snp.makeConstraints {
+            $0.top.equalTo(reservationLabel.snp.bottom).offset(36)
+            $0.bottom.equalToSuperview().inset(36)
+            $0.centerX.equalToSuperview()
+        }
+    }
+}
+
+extension HomeWeatherCell {
     private func generateWeeklyDateView() -> UIStackView {
         let dates = (0..<7).reduce([UIView]()) { array, _ in
             let view = OneDayView()
@@ -65,6 +114,7 @@ extension HomeWeatherCell {
     }
 }
 
+//MARK: Component
 extension HomeWeatherCell {
     class OneDayView: UIStackView {
         let weekdayLabel = UILabel(config: .body12Regular)
@@ -106,6 +156,7 @@ extension HomeWeatherCell {
 
 }
 
+//MARK: Reactive
 extension Reactive where Base: HomeWeatherCell {
     var registerButtonTap: ControlEvent<Void> {
         base.registrationButton.rx.tap
