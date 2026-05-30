@@ -49,6 +49,14 @@ final class HomeWeatherCell: UICollectionViewCell {
     }
 }
 
+//MARK: Configure
+extension HomeWeatherCell {
+    func configure() {
+        
+    }
+}
+
+//MARK: Layout
 extension HomeWeatherCell {
     private func setLayout() {
         let weatherLabelStackView = UIStackView(arrangedSubviews: [weatherImageView, weatherLabel]).then {
@@ -95,9 +103,7 @@ extension HomeWeatherCell {
             $0.centerX.equalToSuperview()
         }
     }
-}
-
-extension HomeWeatherCell {
+    
     private func generateWeeklyDateView() -> UIStackView {
         let dates = (0..<7).reduce([UIView]()) { array, _ in
             let view = OneDayView()
