@@ -125,7 +125,8 @@ extension HomeView {
             
             switch section {
             case .weather:
-                let section = self?.weatherItemSectionLayout()
+                let section = self?.singleItemSectionLayout(height: 324)
+                section?.decorationItems = [weatherBackgroundItem]
                 return section
             }
             
@@ -135,8 +136,8 @@ extension HomeView {
         return layout
     }
     
-    // weather Section
-    private func weatherItemSectionLayout(height: CGFloat = 48) -> NSCollectionLayoutSection {
+    // single item section - weather
+    private func singleItemSectionLayout(height: CGFloat) -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
