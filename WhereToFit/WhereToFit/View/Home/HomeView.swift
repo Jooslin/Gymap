@@ -123,10 +123,11 @@ extension HomeView {
             
         }, configuration: configuration)
         
-        layout.register(CalendarBackgroundView.self, forDecorationViewOfKind: "weatherBackground")
+        layout.register(HomeBackgroundView.self, forDecorationViewOfKind: "weatherBackground")
         return layout
     }
     
+    // weather Section
     private func weatherItemSectionLayout(height: CGFloat = 48) -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
@@ -145,6 +146,7 @@ extension HomeView {
         return section
     }
     
+    // horizontal multiple item section - recommend, program
     private func horizontalGroupItemSectionLayout(height: CGFloat) -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
