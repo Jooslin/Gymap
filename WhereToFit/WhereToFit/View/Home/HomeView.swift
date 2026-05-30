@@ -8,11 +8,17 @@
 import UIKit
 import SnapKit
 import Then
+import RxCocoa
+import RxSwift
 
 final class HomeView: UIView {
-    let titleView = TitleView(rightButtonImage: .alarm)
+    private let titleView = TitleView(rightButtonImage: .alarm)
     private lazy var collectionView = HomeCollectionView(frame: .zero, collectionViewLayout: makeCompositionalLayout())
     private lazy var dataSource = makeCollectionViewDiffableDataSource(collectionView)
+    
+    // Reactive
+    fileprivate let registerButtonTap = PublishRelay<Void>()
+    fileprivate let programButtonTap = PublishRelay<Void>()
     
     init() {
         super.init(frame: .zero)
@@ -49,8 +55,13 @@ extension HomeView {
         
         let weatherCellRegistration = UICollectionView.CellRegistration<HomeWeatherCell, HomeCollectionView.Item> { [weak self] cell,indexPath,item in
             guard let self else { return }
-            cell.rx.alarmButtonTap
-                .bind(to: self.alarmButtonTap)
+            
+            cell.rx.registerButtonTap
+                .bind(to: self.registerButtonTap)
+                .disposed(by: cell.disposeBag)
+            
+            cell.rx.recordButtonTap
+                .bind(to: self.registerButtonTap)
                 .disposed(by: cell.disposeBag)
         }
         
@@ -163,5 +174,15 @@ extension HomeView {
         
         let section = NSCollectionLayoutSection(group: group)
         return section
+    }
+}
+
+extension Reactive where Base: HomeView {
+    var registerButtonTap: PublishRelay<Void> {
+        base.rx.registerButtonTap
+    }
+    
+    var recordButtonTap: PublishRelay<Void> {
+        base.rx.registerButtonTap
     }
 }

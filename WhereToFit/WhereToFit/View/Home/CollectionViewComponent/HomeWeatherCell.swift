@@ -19,10 +19,11 @@ final class HomeWeatherCell: UICollectionViewCell {
     private let weatherLabel = UILabel(config: .body14Medium)
     private let weatherDescriptionLabel = UILabel(config: .title24)
     private let reservationLabel = UILabel(config: .body16Medium)
-    let registrationButton = DesignButton(config: .smallBorderBlue).then {
+    
+    fileprivate let registrationButton = DesignButton(config: .smallBorderBlue).then {
         $0.title = "프로그램 등록"
     }
-    let recordButton = DesignButton(config: .smallFilledBlue).then {
+    fileprivate let recordButton = DesignButton(config: .smallFilledBlue).then {
         $0.title = "운동 기록"
     }
     
