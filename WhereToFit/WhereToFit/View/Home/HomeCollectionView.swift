@@ -22,11 +22,13 @@ final class HomeCollectionView: UICollectionView {
 }
 
 extension HomeCollectionView {
+    nonisolated
     enum Section {
         case weather
     }
     
-    enum Item {
+    nonisolated
+    enum Item: Hashable {
         case weather
     }
 }

@@ -34,6 +34,67 @@ final class HomeView: UIView {
     }
 }
 
+//MARK: CollectionView - Datasource
+extension HomeView {
+    private func makeCollectionViewDiffableDataSource(_ collectionView: UICollectionView) -> UICollectionViewDiffableDataSource<HomeCollectionView.Section, HomeCollectionView.Item> {
+        let headerViewRegistration = UICollectionView.SupplementaryRegistration<HomeHeaderView>(elementKind: "headerKind") { supplementaryView, elementKind, indexPath in
+            guard let section = self?.dataSource.sectionIdentifier(for: indexPath.section) else { return }
+            
+            switch section {
+            default:
+                break
+            }
+        }
+        
+        
+        let weatherCellRegistration = UICollectionView.CellRegistration<HomeWeatherCell, HomeCollectionView.Item> { [weak self] cell,indexPath,item in
+            guard let self else { return }
+            cell.rx.alarmButtonTap
+                .bind(to: self.alarmButtonTap)
+                .disposed(by: cell.disposeBag)
+        }
+        
+        let dataSource = UICollectionViewDiffableDataSource<HomeCollectionView.Section, HomeCollectionView.Item>(collectionView: collectionView) { [weak self] collectionView, indexPath, item in
+            
+            guard let section = self?.dataSource.sectionIdentifier(for: indexPath.section) else {
+                fatalError("CalendarCollectionView: 유효하지 않은 섹션입니다.")
+            }
+            
+            return switch section {
+            case .weather:
+                collectionView.dequeueConfiguredReusableCell(using: weatherCellRegistration, for: indexPath, item: item)
+            }
+        }
+        
+        dataSource.supplementaryViewProvider = { [weak self] _, kind, indexPath in
+            guard let section = self?.dataSource.sectionIdentifier(for: indexPath.section) else {
+                return UICollectionReusableView()
+            }
+            
+            switch kind {
+            case "headerKind":
+                return collectionView.dequeueConfiguredReusableSupplementary(using: headerViewRegistration, for: indexPath)
+                
+            default:
+                return UICollectionReusableView()
+            }
+        }
+        
+        return dataSource
+    }
+    
+    func setSnapshot(_ data: [HomeCollectionView.Section: [HomeCollectionView.Item]]) {
+        var snapshot = NSDiffableDataSourceSnapshot<HomeCollectionView.Section, HomeCollectionView.Item>()
+        
+        for target in data.sorted(by: { $0.key.rawValue < $1.key.rawValue }) {
+            snapshot.appendSections([target.key])
+            snapshot.appendItems(target.value, toSection: target.key)
+        }
+        
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+}
+
 //MARK: CollectionView - Layout
 extension HomeView {
     private func makeCompositionalLayout() -> UICollectionViewLayout {
