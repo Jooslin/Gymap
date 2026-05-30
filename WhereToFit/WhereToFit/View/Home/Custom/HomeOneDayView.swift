@@ -12,11 +12,15 @@ import Then
 
 class OneDayView: UIStackView {
     let weekdayLabel = UILabel(config: .body12Regular)
-    let dateView = RoundImageView(image: nil, type: .circle)
+    let dateImageView = RoundImageView(image: nil, type: .circle)
     let dateLabel = UILabel(config: .body14Regular)
     
+    
     init() {
-        super.init(arrangedSubviews: [weekdayLabel, dateView])
+        super.init(frame: .zero)
+        addArrangedSubview(weekdayLabel)
+        addArrangedSubview(dateImageView)
+
         axis = .vertical
         spacing = 8
         alignment = .center
@@ -30,7 +34,11 @@ class OneDayView: UIStackView {
     }
     
     private func setLayout() {
-        dateView.addSubview(dateLabel)
+        dateImageView.addSubview(dateLabel)
+        
+        dateImageView.snp.makeConstraints {
+            $0.width.height.equalTo(32)
+        }
         
         dateLabel.snp.makeConstraints {
             $0.center.equalToSuperview()
